@@ -1,0 +1,47 @@
+--fly, not unfly
+
+local power = 30
+    wait() 
+    local tool = nil
+     
+    local bpos = Instance.new("BodyPosition") 
+    local gyro = Instance.new("BodyGyro") 
+     
+    local fly = false 
+     
+    local player = game.Players.LocalPlayer 
+     
+    local character = player.Character
+    if not character or not character.Parent then
+        character = player.CharacterAdded:wait()
+    end
+     
+    local char = character:FindFirstChild("UpperTorso")
+    if not char then char = character:FindFirstChild("Torso") end
+     
+    local mouse = game.Players.LocalPlayer:GetMouse()
+
+bpos.Parent = char 
+    	bpos.position = char.Position + Vector3.new(0,10,0) 
+    	gyro.Parent = char 
+    	
+    	character.Humanoid.PlatformStand = true 
+     
+    	for i, v in ipairs(char:GetChildren()) do 
+    		if v.className == "Motor" then 
+    			v.MaxVelocity = 0 
+    			v.CurrentAngle = -1 
+    			if v.Name == "Left Hip" then 
+    				v.CurrentAngle = 1 
+    			end 
+    		end 
+    	end
+    	
+    	fly = true 
+    	wait()
+    	while fly do
+    		local pos = mouse.Hit.p
+    		gyro.CFrame = CFrame.new(char.Position,pos) * CFrame.fromEulerAnglesXYZ(-3.14/2,0,0) 
+    		bpos.Position = char.Position + (pos-char.Position).unit * power 
+    		wait()
+    	end 
