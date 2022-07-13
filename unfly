@@ -1,0 +1,12 @@
+--unfly
+
+gyro.Parent = nil 
+    	fly = false 
+     
+    	character.Humanoid.PlatformStand = false 
+    	
+    	for i, v in ipairs(char:GetChildren()) do 
+    		if v.className == "Motor" then 
+    			v.MaxVelocity = 1 
+    		end 
+    	end
